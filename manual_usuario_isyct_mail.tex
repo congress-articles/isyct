@@ -1,0 +1,517 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{float}
+\usepackage[section]{placeins}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\usepackage{lastpage}
+
+\geometry{top=22mm,bottom=23mm,left=22mm,right=22mm,headheight=16pt}
+
+\definecolor{isyctNavy}{HTML}{07111F}
+\definecolor{isyctPanel}{HTML}{101C33}
+\definecolor{isyctCyan}{HTML}{00D8CC}
+\definecolor{isyctCyanDark}{HTML}{007F79}
+\definecolor{isyctBlue}{HTML}{365F91}
+\definecolor{isyctText}{HTML}{172033}
+\definecolor{isyctMuted}{HTML}{5E6C84}
+\definecolor{isyctLine}{HTML}{D8E1EA}
+\definecolor{isyctSoft}{HTML}{F2F7F8}
+\definecolor{isyctWarning}{HTML}{A64B00}
+\definecolor{isyctWarningBg}{HTML}{FFF4E5}
+\definecolor{isyctDanger}{HTML}{9F1D35}
+\definecolor{isyctDangerBg}{HTML}{FFF0F2}
+
+\hypersetup{
+  hypertexnames=false,
+  colorlinks=true,
+  linkcolor=isyctCyanDark,
+  urlcolor=isyctBlue,
+  citecolor=isyctBlue,
+  pdftitle={Manual do Usuário do ISYCT-Mail},
+  pdfauthor={Projeto ISYCT-Mail},
+  pdfsubject={Configuração e uso do cliente de e-mail ISYCT-Mail},
+  pdfkeywords={ISYCT-Mail, manual, e-mail, criptografia pós-quântica, DID, GOV.BR}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlist[itemize]{leftmargin=6mm,itemsep=2pt,topsep=3pt}
+\setlist[enumerate]{leftmargin=8mm,itemsep=5pt,topsep=4pt}
+\renewcommand{\arraystretch}{1.25}
+
+\titleformat{\section}{\Large\bfseries\color{isyctNavy}}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\large\bfseries\color{isyctBlue}}{\thesubsection}{0.65em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{isyctNavy}}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{18pt}{7pt}
+\titlespacing*{\subsection}{0pt}{13pt}{5pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textbf{ISYCT\textcolor{isyctCyanDark}{Mail}}}
+\fancyhead[R]{\small Manual do usuário}
+\fancyfoot[L]{\footnotesize Protótipo acadêmico}
+\fancyfoot[R]{\footnotesize \thepage\ de \pageref*{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\newtcolorbox{importantbox}[1][Atenção]{
+  enhanced,breakable,colback=isyctDangerBg,colframe=isyctDanger,
+  boxrule=0.7pt,arc=2mm,left=4mm,right=4mm,top=3mm,bottom=3mm,
+  title=#1,fonttitle=\bfseries,coltitle=isyctDanger
+}
+\newtcolorbox{warningbox}[1][Importante]{
+  enhanced,breakable,colback=isyctWarningBg,colframe=isyctWarning,
+  boxrule=0.7pt,arc=2mm,left=4mm,right=4mm,top=3mm,bottom=3mm,
+  title=#1,fonttitle=\bfseries,coltitle=isyctWarning
+}
+\newtcolorbox{tipbox}[1][Boa prática]{
+  enhanced,breakable,colback=isyctSoft,colframe=isyctCyanDark,
+  boxrule=0.7pt,arc=2mm,left=4mm,right=4mm,top=3mm,bottom=3mm,
+  title=#1,fonttitle=\bfseries,coltitle=isyctCyanDark
+}
+\newtcolorbox{infobox}[1][Nota]{
+  enhanced,breakable,colback=white,colframe=isyctBlue,
+  boxrule=0.7pt,arc=2mm,left=4mm,right=4mm,top=3mm,bottom=3mm,
+  title=#1,fonttitle=\bfseries,coltitle=isyctBlue
+}
+
+\newcommand{\uis}[1]{\textbf{``#1''}}
+\newcommand{\menu}[1]{\textbf{#1}}
+\newcommand{\filepath}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\screen}[3]{%
+  \begin{figure}[H]
+    \centering
+    \fcolorbox{isyctLine}{white}{\includegraphics[width=0.965\linewidth,height=#2,keepaspectratio]{#1}}
+    \caption{#3}
+  \end{figure}
+}
+
+\begin{document}
+
+\begin{titlepage}
+  \pagecolor{isyctNavy}
+  \color{white}
+  \vspace*{18mm}
+  {\Huge\bfseries ISYCT\textcolor{isyctCyan}{Mail}}\\[5mm]
+  {\color{isyctCyan}\rule{34mm}{1.2mm}}\\[17mm]
+  {\fontsize{31}{36}\selectfont\bfseries Manual do usuário}\\[8mm]
+  {\Large Configuração, identidade digital e envio de e-mails cifrados}\\[20mm]
+
+  \begin{tcolorbox}[
+    colback=isyctPanel,colframe=isyctCyan!60!isyctPanel,
+    boxrule=0.8pt,arc=3mm,left=7mm,right=7mm,top=6mm,bottom=6mm
+  ]
+    \color{white}
+    Este manual apresenta o primeiro acesso com Gmail, a criação do banco local cifrado, o gerenciamento de DIDs, a troca de chaves, o uso de evidências GOV.BR e o fluxo de envio e recebimento do Envelope V4.
+  \end{tcolorbox}
+
+  \vfill
+  {\large Versão 1.0}\\[2mm]
+  {\normalsize Outubro de 2026}\\[9mm]
+  {\small Projeto acadêmico \textbullet{} Universidade Federal de São Paulo}
+\end{titlepage}
+\nopagecolor
+\color{isyctText}
+
+\section*{Sobre este manual}
+
+Este documento descreve a versão Linux do protótipo ISYCT-Mail. Os nomes dos botões aparecem entre aspas e correspondem à interface ilustrada. Pequenas diferenças visuais podem ocorrer entre versões do executável.
+
+\begin{warningbox}[Leia antes do primeiro uso]
+  O ISYCT-Mail utiliza dois segredos diferentes: a \textbf{senha de app do Google}, usada para acessar a conta Gmail, e a \textbf{senha do banco local}, usada para abrir o banco SQLCipher. Nenhuma delas é a senha usada para entrar no Gmail pelo navegador. Guarde a senha do banco local em um gerenciador de senhas: se ela for perdida, o aplicativo não consegue abrir nem recuperar o banco.
+\end{warningbox}
+
+\tableofcontents
+\clearpage
+
+\section{Visão geral e requisitos}
+
+O ISYCT-Mail é um cliente de e-mail que preserva o transporte tradicional por SMTP/IMAP e adiciona proteção ponta a ponta no computador do usuário. No modo protegido, assunto, corpo e anexos são incluídos em um arquivo de envelope \filepath{.isyct}; o provedor continua transportando a mensagem, mas a abertura do conteúdo depende das chaves do destinatário.
+
+Para realizar a configuração inicial, tenha em mãos:
+
+\begin{itemize}
+  \item um computador Linux de 64 bits compatível com o executável;
+  \item uma conta Gmail com a verificação em duas etapas habilitada;
+  \item uma senha de app do Google criada especificamente para o ISYCT-Mail;
+  \item um local seguro para armazenar a senha do banco local;
+  \item para enviar mensagens cifradas, outro usuário do ISYCT-Mail com quem seja possível comparar o código de segurança por um canal independente.
+\end{itemize}
+
+\begin{infobox}[Limites que permanecem visíveis ao provedor]
+  A proteção do envelope não oculta os metadados necessários ao transporte, como endereços de remetente e destinatário, data, tamanho aproximado e informações SMTP/IMAP. O sistema também depende da segurança do dispositivo local.
+\end{infobox}
+
+\section{Criar a senha de app para o Gmail}
+
+\subsection{O que é essa senha}
+
+A senha usada pelo ISYCT-Mail é uma \textbf{senha de app} gerada pelo Google. Ela tem 16 caracteres e autoriza um aplicativo a acessar a conta. Ela \textbf{não substitui} e \textbf{não deve ser confundida} com a senha usada para entrar no Gmail pelo navegador.
+
+Segundo a documentação do Google, a criação de senhas de app exige a verificação em duas etapas. A opção pode não aparecer em contas institucionais administradas, em contas protegidas pelo Programa Proteção Avançada ou quando a verificação em duas etapas usa apenas chaves de segurança.
+
+\subsection{Ativar a verificação em duas etapas}
+
+\begin{enumerate}
+  \item Acesse \href{https://myaccount.google.com/}{\texttt{myaccount.google.com}} e entre na conta que será usada no aplicativo.
+  \item Abra \menu{Segurança e login}.
+  \item Na seção sobre como fazer login no Google, selecione \menu{Verificação em duas etapas}.
+  \item Siga as instruções do Google até que a proteção esteja ativa.
+\end{enumerate}
+
+Instruções oficiais: \href{https://support.google.com/accounts/answer/185839?hl=pt-BR}{Ativar a verificação em duas etapas na Conta Google}.
+
+\subsection{Gerar a senha de app}
+\label{sec:senha-app-pratica}
+
+\begin{enumerate}
+  \item Com a conta correta conectada, abra \href{https://myaccount.google.com/apppasswords}{\texttt{myaccount.google.com/apppasswords}}. O Google poderá solicitar nova autenticação.
+  \item No campo para nomear o aplicativo, informe \textbf{ISYCT-Mail}.
+  \item Selecione \menu{Criar}.
+  \item Copie a senha de 16 caracteres exibida. Ao informá-la no ISYCT-Mail, digite ou cole os caracteres \textbf{sem os espaços} usados apenas para separação visual.
+  \item Não envie essa senha por e-mail, mensagem instantânea ou captura de tela. Depois de gravá-la no banco cifrado do aplicativo, feche a janela do Google.
+\end{enumerate}
+
+Instruções oficiais: \href{https://support.google.com/accounts/answer/185833?hl=pt-BR}{Fazer login com senhas de app}.
+
+\begin{tipbox}[Revogação]
+  A senha de app pode ser revogada na Conta Google sem alterar a senha principal. O Google também revoga as senhas de app quando a senha principal da conta é alterada. Nesse caso, gere outra senha de app e atualize a configuração do ISYCT-Mail.
+\end{tipbox}
+
+\begin{infobox}[IMAP nas contas pessoais]
+  O Google informa que, desde janeiro de 2025, contas pessoais do Gmail não exibem mais a opção para ativar ou desativar IMAP: o acesso permanece habilitado. Em contas administradas, a organização pode aplicar políticas diferentes. Consulte \href{https://support.google.com/mail/answer/7126229?hl=pt-BR}{a orientação oficial para outros clientes de e-mail}.
+\end{infobox}
+
+\clearpage
+\section{Primeira configuração e banco local}
+
+O banco local é um arquivo SQLite protegido com SQLCipher. Nele ficam as configurações da conta, os dados de mensagens, os DIDs, as chaves privadas e os registros de confiança. Por isso, a criação e a guarda da senha exigem atenção.
+
+\screen{assets/manual/manual-settings-account.png}{0.49\textheight}{Tela de configurações: conta Gmail, banco local e troca da senha do banco.}
+
+\subsection{Criar o banco pela primeira vez}
+
+\begin{enumerate}
+  \item Abra o aplicativo e acesse \menu{Configurações}.
+  \item Em \menu{Banco de dados local}, escolha um caminho para o novo arquivo. Use uma pasta privada do seu usuário e evite diretórios temporários.
+  \item Em \uis{Chave AES DB}, crie uma senha exclusiva. A interface exige ao menos oito caracteres, mas recomenda-se uma frase-senha longa, com 16 ou mais caracteres, que não seja reutilizada em outro serviço.
+  \item Registre a senha em um gerenciador de senhas confiável e confirme que o registro foi salvo.
+  \item Selecione \uis{Criar DB}. Aguarde a confirmação antes de fechar a tela.
+\end{enumerate}
+
+\begin{importantbox}[A senha do banco não pode ser recuperada]
+  Não existe mecanismo de ``esqueci minha senha'' para o banco local. Sem a senha exata, o arquivo permanece cifrado e não pode ser aberto pelo ISYCT-Mail. Guarde a senha separadamente da cópia de segurança do banco.
+\end{importantbox}
+
+\subsection{Cadastrar a conta Gmail}
+
+Depois que o banco estiver aberto:
+
+\begin{enumerate}
+  \item Em \menu{Configurações da conta}, informe o endereço Gmail completo.
+  \item Em \uis{App Password}, informe a senha de app de 16 caracteres criada na Seção~\ref{sec:senha-app-pratica}, sem espaços entre os grupos.
+  \item Se desejar, preencha o nome de exibição do remetente.
+  \item Selecione \uis{Salvar conta no DB}.
+  \item Faça uma sincronização para confirmar que a autenticação foi aceita.
+\end{enumerate}
+
+\begin{warningbox}[Credenciais diferentes]
+  No campo \uis{App Password}, use somente a senha de app criada pelo Google. Não use a senha normal da Conta Google e não use a senha do banco SQLCipher.
+\end{warningbox}
+
+\subsection{Abrir um banco existente}
+
+Em uma execução posterior, informe o caminho do arquivo e a mesma senha usada na criação; depois selecione \uis{Abrir DB}. Use \uis{Fechar DB} antes de mover ou copiar o arquivo enquanto o aplicativo estiver em execução.
+
+\subsection{Trocar a senha do banco}
+
+Com o banco aberto, informe a senha atual e a nova senha na área \menu{Troca de senha do banco}; depois selecione \uis{Trocar chave AES DB}. Atualize imediatamente o gerenciador de senhas. A troca altera a proteção do banco, mas não modifica a senha de app do Gmail.
+
+\begin{tipbox}[Cópia de segurança]
+  Feche o banco e mantenha uma cópia do arquivo em mídia protegida. Teste periodicamente se a cópia pode ser aberta com a senha guardada. O arquivo e a senha não devem ficar juntos no mesmo local desprotegido.
+\end{tipbox}
+
+\section{Demais opções de configuração}
+
+\screen{assets/manual/manual-settings-security.png}{0.54\textheight}{Continuação da tela de configurações: desempenho, Envelope V4 e abertura de arquivos.}
+
+\begin{description}[style=nextline,leftmargin=0pt,labelsep=0pt,itemsep=6pt]
+  \item[Otimização do banco] Executa manutenção local para reorganizar o arquivo. Faça uma cópia de segurança antes de operações administrativas.
+  \item[Abertura automática] Define quantos envelopes o aplicativo pode abrir em uma operação. O valor zero desativa o limite automático indicado pela interface; valores altos podem aumentar o uso de CPU e memória.
+  \item[Compactar anexos] Reduz o tamanho quando o tipo de arquivo permite, antes de montar o envelope. Arquivos já comprimidos podem apresentar pouco ganho.
+  \item[Hash padrão do Envelope V4] A interface oferece SHA3-256, SHA3-512 e SHA-256. Mantenha a opção predefinida, salvo quando houver requisito de interoperabilidade previamente combinado.
+  \item[Pasta para decifrar] Define a pasta de saída para envelopes abertos em lote. Confirme se a pasta tem permissão de escrita e não é compartilhada com pessoas não autorizadas.
+\end{description}
+
+\begin{importantbox}[Arquivos decifrados]
+  Depois da abertura, o conteúdo exportado para uma pasta comum deixa de estar protegido pelo envelope. Proteja o diretório de destino, remova arquivos temporários e aplique a política de retenção adequada.
+\end{importantbox}
+
+\clearpage
+\section{Tela principal e sincronização}
+
+\screen{assets/manual/manual-inbox.png}{0.54\textheight}{Tela principal do ISYCT-Mail: pastas, lista de mensagens e painel de leitura.}
+
+A tela principal é dividida em três áreas: pastas da conta, lista de mensagens e painel de leitura. O menu de sincronização permite atualizar pastas, executar sincronização rápida ou solicitar uma sincronização completa.
+
+\begin{enumerate}
+  \item Confirme que o banco está aberto e que a conta foi salva.
+  \item Atualize as pastas quando houver alterações na estrutura da conta.
+  \item Use a sincronização rápida para o uso cotidiano.
+  \item Reserve a sincronização completa para a primeira carga ou para corrigir inconsistências de listagem, pois ela pode consumir mais tempo e rede.
+\end{enumerate}
+
+O indicador do topo informa o estado local. Se a conta não autenticar, volte às configurações e confira endereço, senha de app e conectividade.
+
+\section{DIDs e chaves criptográficas}
+
+\subsection{O que é um DID no ISYCT-Mail}
+
+O DID identifica um conjunto de chaves públicas usado pelo protocolo. As chaves privadas correspondentes permanecem no banco local cifrado. Para enviar uma mensagem protegida, o remetente escolhe seu DID local e um DID confiável do destinatário.
+
+\screen{assets/manual/manual-did-management.png}{0.52\textheight}{Tela de DIDs: criação, catálogo local, importação e ações de ciclo de vida.}
+
+\subsection{Criar o primeiro DID}
+
+\begin{enumerate}
+  \item Abra \menu{DIDs} e permaneça na aba \menu{Gerenciar DIDs}.
+  \item Informe um rótulo que permita reconhecer o uso do DID, por exemplo \textit{Notebook principal}.
+  \item Revise as variantes ML-KEM e ML-DSA. As opções inicialmente exibidas são as predefinições do protótipo; altere-as apenas se houver um requisito técnico combinado.
+  \item Marque a opção para torná-lo padrão, caso seja a identidade principal da conta.
+  \item Selecione \uis{Criar DID} e aguarde a confirmação.
+\end{enumerate}
+
+\subsection{Estados e operações}
+
+\begin{itemize}
+  \item \textbf{Ativo}: pode ser usado nas operações permitidas pela interface.
+  \item \textbf{Rotacionado}: foi substituído por outro DID, mas deve ser preservado para manter o histórico e abrir mensagens antigas.
+  \item \textbf{Revogado ou comprometido}: não deve ser escolhido para novas comunicações.
+  \item \textbf{Exclusão}: deve ser usada somente depois de confirmar que a chave não será necessária para mensagens ou evidências anteriores.
+\end{itemize}
+
+\begin{importantbox}[Não apague chaves por rotina]
+  Um envelope antigo pode depender da chave privada associada ao DID usado quando a mensagem foi recebida. A rotação é preferível à exclusão imediata. Antes de excluir, verifique o impacto e mantenha uma cópia de segurança do banco.
+\end{importantbox}
+
+\subsection{Importação e nível de confiança}
+
+A tela permite importar material público em diferentes formatos. Um JSON público convencional apresenta dados de uma chave, mas não comprova sozinho a identidade da pessoa; por isso, pode entrar apenas como candidato. A promoção para uso operacional deve resultar de uma troca de chaves concluída ou de uma evidência portátil validada conforme indicado pela interface.
+
+\clearpage
+\section{Troca de chaves com outro usuário}
+
+A troca de chaves associa um endereço de e-mail a um DID remoto e exige prova de posse e comparação por canal independente. Somente depois da conclusão o contato fica apto para o envio cifrado.
+
+\screen{assets/manual/manual-key-exchange.png}{0.50\textheight}{Aba de troca de chaves: nova sessão, solicitações recebidas e etapas de verificação.}
+
+\subsection{Iniciar e aceitar a troca}
+
+\begin{enumerate}
+  \item Na aba \menu{Troca de chaves}, informe o e-mail do contato.
+  \item Escolha um DID local ativo e selecione \uis{Iniciar troca de chaves}.
+  \item Peça ao contato que sincronize a conta. A solicitação aparecerá em \menu{Solicitações recebidas}.
+  \item O contato seleciona um DID local ativo e aceita a solicitação.
+  \item Ambos aguardam as etapas de convite e prova de posse e, quando solicitado, comparam o \textit{Safety Number} e os identificadores exibidos.
+  \item Cada lado confirma somente se todos os valores forem idênticos.
+\end{enumerate}
+
+\begin{importantbox}[Use um canal realmente independente]
+  Compare o código por ligação para um número já conhecido, presencialmente ou por outro canal cuja identidade tenha sido verificada. Não use a própria conversa de e-mail que transportou a troca. Se um caractere divergir, selecione a opção de que os dados não conferem e reinicie o processo após investigar.
+\end{importantbox}
+
+O fluxo esperado passa por \textbf{Convite}, \textbf{Prova de posse}, \textbf{Comparação OOB} (fora de banda) e \textbf{Identidade verificada}. A sincronização da caixa postal pode ser necessária entre as etapas, pois as mensagens de protocolo trafegam por e-mail.
+
+\section{Evidência de identidade com assinatura GOV.BR}
+
+O fluxo GOV.BR adiciona uma evidência assinada ao DID. O ISYCT-Mail prepara o PDF e valida o resultado importado, mas \textbf{não realiza a assinatura GOV.BR} e não recebe a chave privada de assinatura do usuário.
+
+\screen{assets/manual/manual-govbr.png}{0.51\textheight}{Aba de certificados GOV.BR: cadeia de confiança, lista de revogação e evidências PDF.}
+
+\subsection{Preparar a validação}
+
+\begin{enumerate}
+  \item Abra \menu{DIDs} e a aba \menu{Certificados GOV.BR}.
+  \item Use os atalhos da própria tela para obter a cadeia oficial \filepath{Cadeia_GovBr-der.p7b} e a lista de certificados revogados \filepath{LCRacfGovBr.crl}.
+  \item Importe os dois arquivos nos campos correspondentes.
+  \item Confira o estado da cadeia e a validade da lista de revogação. Atualize a lista quando ela expirar.
+\end{enumerate}
+
+\subsection{Assinar a evidência do próprio DID}
+
+\begin{enumerate}
+  \item No DID local ativo, selecione \uis{PDF para assinatura}.
+  \item Salve o PDF gerado pelo aplicativo.
+  \item Fora do ISYCT-Mail, assine \textbf{o mesmo arquivo} com o serviço GOV.BR ou outro assinador aceito pelo fluxo. Não edite, imprima novamente nem reconverta o PDF. A simples mudança do nome do arquivo não altera seu conteúdo.
+  \item Retorne ao aplicativo e selecione \uis{Importar PDF assinado} ou \uis{Associar PDF}, conforme a ação apresentada para o DID.
+  \item Leia o resultado da validação e confirme que a evidência foi associada ao DID correto.
+\end{enumerate}
+
+A validação considera a assinatura PDF/PAdES, a cadeia do certificado, a situação de revogação e os dados criptográficos incorporados ao documento. Quando necessário, confira também o documento no \href{https://validar.iti.gov.br/}{Validador de Assinaturas do ITI}.
+
+\subsection{Validar o PDF recebido de um contato}
+
+Ao importar a evidência de outra pessoa, selecione o DID remoto esperado e revise nome, e-mail do certificado, DID e impressões digitais mostrados pelo aplicativo. Uma assinatura válida comprova a assinatura do documento, mas a associação ao contato deve ser rejeitada quando os dados não correspondem ao relacionamento esperado.
+
+Se o e-mail do certificado GOV.BR for diferente do endereço usado pelo DID, a interface pode exigir uma verificação adicional: use \uis{Vincular e-mails}, encaminhe a mensagem de verificação integralmente, sem remover ou alterar o bloco JSON, e depois selecione \uis{Verificar recebimento}. Trate divergências como pendentes até concluir essa etapa ou outra verificação fora de banda.
+
+\begin{warningbox}[Certificado e DID devem permanecer vinculados]
+  Não associe uma evidência apenas porque a assinatura PDF é válida. Confirme que o documento assinado contém o mesmo DID e as mesmas impressões digitais esperadas. Se a lista de revogação estiver ausente ou vencida, atualize-a antes de confiar no resultado.
+\end{warningbox}
+
+\clearpage
+\section{Enviar um e-mail cifrado}
+
+\subsection{Pré-requisitos}
+
+Antes do envio, confirme que:
+
+\begin{itemize}
+  \item o banco está aberto e a conta Gmail está autenticada;
+  \item existe um DID local ativo;
+  \item cada destinatário possui um DID remoto confiável e operacional;
+  \item a troca de chaves ou a validação de evidência foi concluída;
+  \item os anexos cabem nos limites do provedor e no espaço disponível no computador.
+\end{itemize}
+
+\subsection{Montar e enviar}
+
+\begin{enumerate}
+  \item Na tela principal, selecione \uis{Novo e-mail}.
+  \item Preencha destinatário, assunto, corpo e, se necessário, adicione anexos.
+  \item Ative \uis{Enviar como envelope pós-quântico}.
+  \item Selecione o DID local que assinará/autenticará o envelope.
+  \item Para cada endereço, selecione o DID confiável do contato e adicione o destinatário. Se ele ainda não estiver apto, use o atalho para iniciar a troca de chaves e conclua a verificação antes do envio.
+  \item Quando houver mais de um destinatário, revise o modo de entrega indicado pela interface, como cópia individual ou cópia oculta, e confira a lista final.
+  \item Selecione \uis{Enviar} e aguarde o resultado de cada destinatário.
+\end{enumerate}
+
+O aplicativo monta um Envelope V4, cifra o conteúdo e cria uma forma de acesso para cada destinatário autorizado. No servidor, o transporte ocorre como e-mail com um anexo \filepath{.isyct}; o assunto, o corpo e os anexos originais ficam dentro do envelope protegido.
+
+\begin{warningbox}[Envio para vários destinatários]
+  O resultado pode ser parcial: um destinatário pode ser aceito e outro falhar. Leia o resumo apresentado pelo aplicativo antes de tentar novamente para evitar duplicidade. Verifique também se todos os destinatários possuem uma chave atual e confiável.
+\end{warningbox}
+
+\section{Receber e abrir um e-mail cifrado}
+
+\screen{assets/manual/manual-encrypted-message.png}{0.54\textheight}{Mensagem protegida aberta no cliente, com informações de autenticação e integridade.}
+
+\begin{enumerate}
+  \item Abra o banco local e sincronize a pasta de entrada.
+  \item Selecione a mensagem que contém o envelope \filepath{.isyct}.
+  \item O aplicativo identifica o envelope e procura uma entrada de destinatário compatível com os DIDs locais.
+  \item Autorize a abertura quando a interface solicitar e aguarde a verificação criptográfica.
+  \item Antes de confiar no conteúdo, leia o painel de segurança: remetente esperado, DID, assinatura, integridade, versão do envelope e estado de confiança.
+  \item Salve anexos apenas em uma pasta segura e abra-os com os cuidados usuais para arquivos recebidos.
+\end{enumerate}
+
+Se houver muitos envelopes pendentes, a tela de configurações oferece abertura em lote para a pasta escolhida. O limite de abertura automática controla quantos itens são processados por operação.
+
+\begin{importantbox}[Falha de assinatura ou integridade]
+  Não use o conteúdo quando o painel indicar assinatura inválida, integridade comprometida, chave revogada, destinatário inesperado ou identidade não verificada. Preserve a mensagem original para análise e confirme a identidade do remetente por outro canal.
+\end{importantbox}
+
+\section{Segurança, backup e recuperação}
+
+\subsection{Rotina recomendada}
+
+\begin{itemize}
+  \item mantenha o sistema operacional atualizado e proteja a sessão do usuário;
+  \item use senha forte e exclusiva no banco local;
+  \item faça cópias periódicas do banco somente quando ele estiver fechado;
+  \item guarde a senha e a cópia do banco em locais separados e protegidos;
+  \item revogue a senha de app na Conta Google se o computador for perdido;
+  \item marque um DID como comprometido quando houver suspeita de exposição e realize nova troca de chaves;
+  \item compare os códigos de segurança por canal independente;
+  \item mantenha a cadeia GOV.BR e a lista de revogação atualizadas;
+  \item trate arquivos decifrados como documentos comuns: eles precisam da proteção do sistema de arquivos e de uma política de descarte.
+\end{itemize}
+
+\subsection{O que fazer em caso de perda}
+
+\begin{tabularx}{\textwidth}{>{\bfseries}p{0.27\textwidth}X}
+  \toprule
+  Evento & Ação recomendada \\
+  \midrule
+  Perda da senha de app & Revogue a senha antiga no Google, crie outra e atualize a conta no aplicativo. \\
+  Perda da senha do banco & Não há recuperação pelo aplicativo. Restaure uma cópia cujo segredo seja conhecido ou inicie um novo banco, aceitando a perda do material local anterior. \\
+  Perda do arquivo do banco & Restaure a cópia de segurança. Sem cópia, DIDs privados e dados locais não podem ser recriados. \\
+  Suspeita de chave exposta & Marque o DID como comprometido, crie um novo DID e repita a verificação com os contatos. \\
+  Perda do computador & Revogue a senha de app, proteja a Conta Google e trate os DIDs locais como potencialmente comprometidos. \\
+  \bottomrule
+\end{tabularx}
+
+\section{Solução de problemas}
+
+\small
+\begin{longtable}{>{\bfseries}p{0.25\textwidth}p{0.31\textwidth}p{0.36\textwidth}}
+  \toprule
+  Sintoma & Causa provável & O que verificar \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Sintoma & Causa provável & O que verificar \\
+  \midrule
+  \endhead
+  Gmail não autentica & Senha comum usada no lugar da senha de app; espaços copiados; senha revogada; política da conta. & Confira o e-mail completo, gere uma senha de app, remova os espaços entre grupos e verifique a autenticação em duas etapas. \\
+  Banco não abre & Caminho errado, senha incorreta ou arquivo danificado. & Selecione o arquivo correto, respeite maiúsculas/minúsculas da senha e teste uma cópia conhecida. Não tente recriar por cima do arquivo. \\
+  Contato não aparece no envio cifrado & DID remoto ainda candidato, troca incompleta, chave revogada ou e-mail divergente. & Conclua a troca de chaves, sincronize as contas e revise o estado de confiança e o endereço associado. \\
+  Código de segurança diverge & Sessão errada, contato incorreto ou tentativa de interferência. & Não confirme. Cancele, valide o endereço por canal independente e inicie nova sessão. \\
+  Envelope não abre & DID local ausente, chave antiga removida, arquivo incompleto ou envelope para outro destinatário. & Preserve o e-mail original, confirme o destinatário, restaure o banco correto e verifique o painel de erro. \\
+  GOV.BR fica pendente/indeterminado & Cadeia ausente, lista de revogação vencida, PDF alterado ou dados divergentes. & Atualize cadeia e lista, importe o PDF assinado original e confira DID, impressões digitais e e-mail. \\
+  Mensagens não aparecem & Pasta ainda não atualizada, sincronização pendente ou falha de rede. & Atualize as pastas, execute sincronização rápida e, se necessário, completa. Confira conectividade e autenticação. \\
+  \bottomrule
+\end{longtable}
+\normalsize
+
+\section{Checklist rápido}
+
+\begin{tcolorbox}[colback=isyctNavy,colframe=isyctNavy,arc=3mm,left=6mm,right=6mm,top=5mm,bottom=5mm]
+\color{white}
+\begin{enumerate}[label=\textcolor{isyctCyan}{\arabic*.},leftmargin=7mm]
+  \item Ative a verificação em duas etapas no Google e gere uma senha de app.
+  \item Crie o banco local com uma senha forte e guarde-a em local seguro.
+  \item Salve a conta Gmail usando a senha de app, não a senha do navegador.
+  \item Crie um DID local ativo e faça uma cópia de segurança do banco.
+  \item Conclua a troca de chaves e compare o código por canal independente.
+  \item Se usar GOV.BR, instale cadeia e lista de revogação, assine o PDF externamente e importe-o.
+  \item Ative o modo de envelope pós-quântico ao redigir e confira os DIDs dos destinatários.
+  \item Ao receber, leia o painel de segurança antes de confiar no conteúdo.
+\end{enumerate}
+\end{tcolorbox}
+
+\section*{Referências e endereços úteis}
+\addcontentsline{toc}{section}{Referências e endereços úteis}
+
+\begin{itemize}
+  \item Google: \href{https://support.google.com/accounts/answer/185839?hl=pt-BR}{Ativar a verificação em duas etapas}.
+  \item Google: \href{https://support.google.com/accounts/answer/185833?hl=pt-BR}{Fazer login com senhas de app}.
+  \item Gmail: \href{https://support.google.com/mail/answer/7126229?hl=pt-BR}{Configurar o Gmail em outro cliente de e-mail}.
+  \item ITI: \href{https://validar.iti.gov.br/}{Validador de Assinaturas Eletrônicas}.
+\end{itemize}
+
+\vfill
+\begin{center}
+  \color{isyctMuted}\small
+  ISYCT-Mail \textbullet{} Manual do usuário \textbullet{} Versão 1.0
+\end{center}
+
+\end{document}

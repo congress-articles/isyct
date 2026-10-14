@@ -1,0 +1,34 @@
+\babel@toc {brazil}{}\relax 
+\contentsline {section}{\numberline {1}Visão geral e requisitos}{3}{section.1}%
+\contentsline {section}{\numberline {2}Criar a senha de app para o Gmail}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}O que é essa senha}{3}{subsection.3}%
+\contentsline {subsection}{\numberline {2.2}Ativar a verificação em duas etapas}{3}{subsection.4}%
+\contentsline {subsection}{\numberline {2.3}Gerar a senha de app}{3}{subsection.9}%
+\contentsline {section}{\numberline {3}Primeira configuração e banco local}{5}{section.15}%
+\contentsline {subsection}{\numberline {3.1}Criar o banco pela primeira vez}{5}{subsection.18}%
+\contentsline {subsection}{\numberline {3.2}Cadastrar a conta Gmail}{6}{subsection.24}%
+\contentsline {subsection}{\numberline {3.3}Abrir um banco existente}{6}{subsection.30}%
+\contentsline {subsection}{\numberline {3.4}Trocar a senha do banco}{6}{subsection.31}%
+\contentsline {section}{\numberline {4}Demais opções de configuração}{7}{section.32}%
+\contentsline {section}{\numberline {5}Tela principal e sincronização}{9}{section.35}%
+\contentsline {section}{\numberline {6}DIDs e chaves criptográficas}{9}{section.42}%
+\contentsline {subsection}{\numberline {6.1}O que é um DID no ISYCT-Mail}{9}{subsection.43}%
+\contentsline {subsection}{\numberline {6.2}Criar o primeiro DID}{10}{subsection.46}%
+\contentsline {subsection}{\numberline {6.3}Estados e operações}{10}{subsection.52}%
+\contentsline {subsection}{\numberline {6.4}Importação e nível de confiança}{11}{subsection.53}%
+\contentsline {section}{\numberline {7}Troca de chaves com outro usuário}{12}{section.54}%
+\contentsline {subsection}{\numberline {7.1}Iniciar e aceitar a troca}{12}{subsection.57}%
+\contentsline {section}{\numberline {8}Evidência de identidade com assinatura GOV.BR}{13}{section.64}%
+\contentsline {subsection}{\numberline {8.1}Preparar a validação}{13}{subsection.67}%
+\contentsline {subsection}{\numberline {8.2}Assinar a evidência do próprio DID}{13}{subsection.72}%
+\contentsline {subsection}{\numberline {8.3}Validar o PDF recebido de um contato}{14}{subsection.78}%
+\contentsline {section}{\numberline {9}Enviar um e-mail cifrado}{15}{section.79}%
+\contentsline {subsection}{\numberline {9.1}Pré-requisitos}{15}{subsection.80}%
+\contentsline {subsection}{\numberline {9.2}Montar e enviar}{15}{subsection.81}%
+\contentsline {section}{\numberline {10}Receber e abrir um e-mail cifrado}{16}{section.89}%
+\contentsline {section}{\numberline {11}Segurança, backup e recuperação}{16}{section.98}%
+\contentsline {subsection}{\numberline {11.1}Rotina recomendada}{16}{subsection.99}%
+\contentsline {subsection}{\numberline {11.2}O que fazer em caso de perda}{17}{subsection.100}%
+\contentsline {section}{\numberline {12}Solução de problemas}{17}{section.101}%
+\contentsline {section}{\numberline {13}Checklist rápido}{18}{section.103}%
+\contentsline {section}{Referências e endereços úteis}{18}{Item.111}%

@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="pt-BR" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Conheça o ISYCT-Mail, um cliente de e-mail experimental com criptografia pós-quântica no lado do usuário.">
+  <meta name="theme-color" content="#07111f">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ISYCT-Mail — E-mail pós-quântico no lado do usuário">
+  <meta property="og:description" content="Arquitetura, Envelope V4, gerenciamento de chaves e resultados do protótipo ISYCT-Mail.">
+  <meta property="og:image" content="assets/screenshot-inbox.png">
+  <title>ISYCT-Mail — E-mail pós-quântico</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content" data-i18n="accessibility.skip">Pular para o conteúdo</a>
+
+  <header class="site-header" data-header>
+    <div class="shell header-inner">
+      <a class="brand" href="#top" aria-label="ISYCT-Mail">
+        <svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true">
+          <path d="M22 3.5 37 9v11.2c0 9.4-5.7 16.5-15 20.3C12.7 36.7 7 29.6 7 20.2V9l15-5.5Z"/>
+          <path d="m14 17 8 6 8-6M14 17v11h16V17"/>
+        </svg>
+        <span>ISYCT<span class="brand-accent">Mail</span></span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle>
+        <span class="sr-only" data-i18n="accessibility.menu">Abrir menu</span>
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="primary-nav" id="primary-navigation" aria-label="Navegação principal" data-i18n-aria-label="accessibility.navigation">
+        <a href="#solution" data-i18n="nav.solution">Solução</a>
+        <a href="#architecture" data-i18n="nav.architecture">Arquitetura</a>
+        <a href="#envelope" data-i18n="nav.envelope">Envelope V4</a>
+        <a href="#keys" data-i18n="nav.keys">Chaves</a>
+        <a href="#performance" data-i18n="nav.performance">Desempenho</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="language-switcher" role="group" aria-label="Selecionar idioma" data-i18n-aria-label="accessibility.language">
+          <button type="button" class="language-option is-active" data-language="pt" aria-pressed="true">PT</button>
+          <button type="button" class="language-option" data-language="en" aria-pressed="false">EN</button>
+        </div>
+        <a class="button button-small button-primary header-download" href="isyct_mail" download="isyct_mail" data-download>
+          <span data-i18n="nav.download">Baixar para Linux</span>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v10m0 0 4-4m-4 4L6 8M3 15v2h14v-2"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" id="top">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-glow hero-glow-one" aria-hidden="true"></div>
+      <div class="hero-glow hero-glow-two" aria-hidden="true"></div>
+      <div class="shell hero-layout">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">
+            <span class="pulse-dot"></span>
+            <span data-i18n="hero.eyebrow">Protótipo acadêmico • Linux x86-64</span>
+          </div>
+          <h1 data-i18n="hero.title">Seu e-mail continua o mesmo. O conteúdo deixa de pertencer ao servidor.</h1>
+          <p class="hero-lede" data-i18n="hero.lede">O ISYCT-Mail acrescenta criptografia ponta a ponta pós-quântica ao fluxo tradicional de e-mail, preservando SMTP, IMAP e provedores existentes.</p>
+          <div class="hero-actions">
+            <a class="button button-primary button-large" href="isyct_mail" download="isyct_mail" data-download>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v10m0 0 4-4m-4 4L6 8M3 15v2h14v-2"/></svg>
+              <span data-i18n="hero.download">Baixar executável Linux</span>
+            </a>
+            <a class="button button-ghost button-large" href="#architecture">
+              <span data-i18n="hero.explore">Explorar a arquitetura</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 6 6-6 6"/></svg>
+            </a>
+          </div>
+          <p class="binary-note"><span>ELF · x86-64</span><span>44,2 MiB</span><span>SHA-256</span></p>
+        </div>
+
+        <div class="hero-demo reveal" data-reveal-delay="120">
+          <div class="demo-window">
+            <div class="demo-topbar">
+              <div class="window-dots"><span></span><span></span><span></span></div>
+              <span class="demo-title">message.isyct</span>
+              <span class="demo-status"><i></i><span data-i18n="hero.demo.secure">protegido</span></span>
+            </div>
+            <div class="demo-content">
+              <div class="mail-preview">
+                <div class="mail-icon">
+                  <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M4 7h20v15H4zM4 8l10 8 10-8"/></svg>
+                </div>
+                <div>
+                  <span class="demo-label" data-i18n="hero.demo.message">Mensagem original</span>
+                  <strong data-i18n="hero.demo.private">Assunto, corpo e anexos</strong>
+                </div>
+              </div>
+              <div class="crypto-flow">
+                <div class="flow-line"><span></span></div>
+                <div class="crypto-step is-complete">
+                  <span class="step-index">01</span>
+                  <div><strong>AES-256-GCM</strong><small data-i18n="hero.demo.encrypt">Cifra a carga uma vez</small></div>
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 10 4 4 8-9"/></svg>
+                </div>
+                <div class="crypto-step is-complete">
+                  <span class="step-index">02</span>
+                  <div><strong>ML-KEM</strong><small data-i18n="hero.demo.slots">Protege a chave por destinatário</small></div>
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 10 4 4 8-9"/></svg>
+                </div>
+                <div class="crypto-step is-active">
+                  <span class="step-index">03</span>
+                  <div><strong>Hash ML-DSA</strong><small data-i18n="hero.demo.sign">Autentica o envelope completo</small></div>
+                  <span class="processing"><i></i><i></i><i></i></span>
+                </div>
+              </div>
+              <div class="envelope-result">
+                <div class="file-glyph"><span>V4</span></div>
+                <div>
+                  <strong>ISYCTMAIL<span class="muted">.isyct</span></strong>
+                  <small data-i18n="hero.demo.ready">Pronto para SMTP / IMAP</small>
+                </div>
+                <span class="lock-chip">
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 9V6a4 4 0 0 1 8 0v3M4 9h12v9H4z"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="floating-chip chip-one"><span>100×</span><small data-i18n="hero.demo.tests">por cenário</small></div>
+          <div class="floating-chip chip-two"><span>&lt; 8 ms</span><small data-i18n="hero.demo.median">mediana até 100 KB</small></div>
+        </div>
+      </div>
+
+      <div class="shell capability-strip reveal" data-reveal-delay="220">
+        <div><span class="capability-number">01</span><p><strong data-i18n="capabilities.server.title">Servidor cego</strong><small data-i18n="capabilities.server.text">O provedor transporta, mas não abre.</small></p></div>
+        <div><span class="capability-number">02</span><p><strong data-i18n="capabilities.pq.title">Pós-quântico</strong><small data-i18n="capabilities.pq.text">ML-KEM e ML-DSA padronizados.</small></p></div>
+        <div><span class="capability-number">03</span><p><strong data-i18n="capabilities.compat.title">Compatível</strong><small data-i18n="capabilities.compat.text">SMTP, IMAP e MIME continuam em uso.</small></p></div>
+        <div><span class="capability-number">04</span><p><strong data-i18n="capabilities.local.title">Controle local</strong><small data-i18n="capabilities.local.text">Chaves e mensagens no SQLCipher.</small></p></div>
+      </div>
+    </section>
+
+    <section class="section section-light" id="solution">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <span class="section-kicker" data-i18n="solution.kicker">O problema</span>
+          <h2 data-i18n="solution.title">TLS protege o caminho. O ISYCT-Mail protege a mensagem.</h2>
+          <p data-i18n="solution.intro">No e-mail convencional, a conexão pode ser cifrada e ainda assim o conteúdo chegar em texto claro ao provedor. A proposta desloca a fronteira de confiança para o cliente do usuário.</p>
+        </div>
+
+        <div class="comparison reveal">
+          <article class="comparison-card conventional">
+            <div class="card-label"><span></span><span data-i18n="solution.before.label">Fluxo convencional</span></div>
+            <h3 data-i18n="solution.before.title">O servidor participa do conteúdo</h3>
+            <ul class="status-list">
+              <li><i class="status-icon warn"></i><span data-i18n="solution.before.item1">Assunto e corpo podem ser processados no servidor</span></li>
+              <li><i class="status-icon warn"></i><span data-i18n="solution.before.item2">Anexos ficam disponíveis à infraestrutura do provedor</span></li>
+              <li><i class="status-icon neutral"></i><span data-i18n="solution.before.item3">TLS protege conexões, não os pontos finais</span></li>
+            </ul>
+          </article>
+
+          <div class="comparison-arrow" aria-hidden="true">
+            <span></span><svg viewBox="0 0 32 20"><path d="M2 10h26m-7-7 7 7-7 7"/></svg>
+          </div>
+
+          <article class="comparison-card protected">
+            <div class="card-label"><span></span><span data-i18n="solution.after.label">Fluxo ISYCT-Mail</span></div>
+            <h3 data-i18n="solution.after.title">O servidor participa apenas do transporte</h3>
+            <ul class="status-list">
+              <li><i class="status-icon ok"></i><span data-i18n="solution.after.item1">Conteúdo cifrado antes do envio por SMTP</span></li>
+              <li><i class="status-icon ok"></i><span data-i18n="solution.after.item2">Abertura somente no cliente autorizado</span></li>
+              <li><i class="status-icon ok"></i><span data-i18n="solution.after.item3">Assinatura e integridade verificadas antes da exibição</span></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section architecture-section" id="architecture">
+      <div class="shell">
+        <div class="section-heading heading-row reveal">
+          <div>
+            <span class="section-kicker" data-i18n="architecture.kicker">Arquitetura</span>
+            <h2 data-i18n="architecture.title">Segurança no cliente, infraestrutura intacta.</h2>
+          </div>
+          <p data-i18n="architecture.intro">As operações sensíveis ficam no backend Rust. O provedor mantém sua função original: autenticar a conta, transportar, armazenar e sincronizar o envelope cifrado.</p>
+        </div>
+
+        <div class="architecture-canvas reveal">
+          <div class="architecture-node client-node">
+            <span class="node-tag" data-i18n="architecture.sender.tag">Cliente do remetente</span>
+            <div class="node-icon">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 5h18v14H5zM9 23h10M14 19v4"/></svg>
+            </div>
+            <strong data-i18n="architecture.sender.title">Compor e proteger</strong>
+            <small data-i18n="architecture.sender.text">Tauri + Rust + SQLCipher</small>
+            <div class="node-pills"><span>AES-256-GCM</span><span>ML-KEM</span><span>ML-DSA</span></div>
+          </div>
+
+          <div class="transport-path path-out">
+            <span class="path-label">SMTP</span>
+            <div class="moving-packet"><i></i></div>
+          </div>
+
+          <div class="architecture-node server-node">
+            <span class="node-tag" data-i18n="architecture.server.tag">Provedor existente</span>
+            <div class="server-stack" aria-hidden="true"><span></span><span></span><span></span></div>
+            <strong data-i18n="architecture.server.title">Servidor cego</strong>
+            <small data-i18n="architecture.server.text">Armazena apenas o arquivo .isyct</small>
+            <div class="blind-badge">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 10s3-5 8-5 8 5 8 5-3 5-8 5-8-5-8-5Zm2-7 12 14"/></svg>
+              <span data-i18n="architecture.server.badge">Sem texto claro</span>
+            </div>
+          </div>
+
+          <div class="transport-path path-in">
+            <span class="path-label">IMAP</span>
+            <div class="moving-packet"><i></i></div>
+          </div>
+
+          <div class="architecture-node client-node receiver-node">
+            <span class="node-tag" data-i18n="architecture.receiver.tag">Cliente do destinatário</span>
+            <div class="node-icon">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 5h18v14H5zM9 23h10M14 19v4"/></svg>
+            </div>
+            <strong data-i18n="architecture.receiver.title">Validar e abrir</strong>
+            <small data-i18n="architecture.receiver.text">Assinatura → slot → carga</small>
+            <div class="node-pills"><span>DID</span><span data-i18n="architecture.receiver.trust">Confiança</span><span>Cache</span></div>
+          </div>
+
+          <div class="trust-path">
+            <span data-i18n="architecture.trust">Protocolo KEY + confirmação fora de banda</span>
+          </div>
+        </div>
+
+        <div class="layer-grid">
+          <article class="layer-card reveal">
+            <span class="layer-number">01</span>
+            <h3 data-i18n="architecture.layers.interface.title">Interface isolada</h3>
+            <p data-i18n="architecture.layers.interface.text">A WebView solicita operações por comandos Tauri, mas não recebe chaves privadas.</p>
+          </article>
+          <article class="layer-card reveal" data-reveal-delay="80">
+            <span class="layer-number">02</span>
+            <h3 data-i18n="architecture.layers.backend.title">Núcleo Rust</h3>
+            <p data-i18n="architecture.layers.backend.text">Identidade, confiança, criptografia e validação são aplicadas fora da camada visual.</p>
+          </article>
+          <article class="layer-card reveal" data-reveal-delay="160">
+            <span class="layer-number">03</span>
+            <h3 data-i18n="architecture.layers.transport.title">Transporte padrão</h3>
+            <p data-i18n="architecture.layers.transport.text">SMTP, IMAP e MIME carregam o envelope sem precisar conhecer seu conteúdo.</p>
+          </article>
+          <article class="layer-card reveal" data-reveal-delay="240">
+            <span class="layer-number">04</span>
+            <h3 data-i18n="architecture.layers.storage.title">Persistência cifrada</h3>
+            <p data-i18n="architecture.layers.storage.text">SQLCipher protege mensagens, identidades, vínculos e chaves no armazenamento local.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section envelope-section" id="envelope">
+      <div class="shell envelope-layout">
+        <div class="envelope-copy reveal">
+          <span class="section-kicker light" data-i18n="envelope.kicker">Envelope V4</span>
+          <h2 data-i18n="envelope.title">Uma carga cifrada. Um slot seguro para cada destinatário.</h2>
+          <p data-i18n="envelope.intro">O conteúdo é serializado e cifrado uma única vez. Cada destinatário recebe somente uma forma independente de recuperar a chave de conteúdo, reduzindo duplicação e preservando o controle de acesso.</p>
+          <ol class="envelope-steps">
+            <li><span>1</span><div><strong data-i18n="envelope.step1.title">Carga canônica</strong><small data-i18n="envelope.step1.text">Assunto, corpos, endereços e anexos formam MailPayloadV1.</small></div></li>
+            <li><span>2</span><div><strong data-i18n="envelope.step2.title">Cifragem autenticada</strong><small data-i18n="envelope.step2.text">Uma CEK aleatória protege a carga com AES-256-GCM.</small></div></li>
+            <li><span>3</span><div><strong data-i18n="envelope.step3.title">Slots ML-KEM</strong><small data-i18n="envelope.step3.text">A CEK é protegida individualmente para destinatários e remetente.</small></div></li>
+            <li><span>4</span><div><strong data-i18n="envelope.step4.title">Transcript assinado</strong><small data-i18n="envelope.step4.text">Hash ML-DSA autentica cabeçalho, carga, slots e chave pública.</small></div></li>
+          </ol>
+        </div>
+
+        <div class="packet-diagram reveal" data-reveal-delay="120">
+          <div class="packet-header">
+            <span>ISYCTMAIL</span><span>V4</span><span>FLAGS</span><span>PAYLOAD LENGTH</span>
+          </div>
+          <div class="packet-body">
+            <div class="packet-row protected-header">
+              <div class="packet-row-title"><i></i><span data-i18n="envelope.diagram.header">Cabeçalho protegido</span></div>
+              <div class="field-grid"><span>DID</span><span>HASH</span><span>AEAD</span><span>MESSAGE ID</span></div>
+            </div>
+            <div class="packet-row encrypted-payload">
+              <div class="lock-visual">
+                <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M9 14V9a7 7 0 0 1 14 0v5M6 14h20v15H6z"/></svg>
+              </div>
+              <div><strong data-i18n="envelope.diagram.payload">Carga cifrada</strong><small>AES-256-GCM · MailPayloadV1</small></div>
+              <span class="encrypted-code">8F A2 91 7C 04 6E...</span>
+            </div>
+            <div class="slot-group">
+              <span class="group-label" data-i18n="envelope.diagram.slots">Slots de destinatários</span>
+              <div class="slot-row"><span class="avatar">A</span><span class="slot-line"></span><strong>ML-KEM</strong><small>TO</small></div>
+              <div class="slot-row"><span class="avatar">B</span><span class="slot-line"></span><strong>ML-KEM</strong><small>TO</small></div>
+              <div class="slot-row sender-copy"><span class="avatar">S</span><span class="slot-line"></span><strong>ML-KEM</strong><small>SENDER_COPY</small></div>
+            </div>
+            <div class="signature-row"><span data-i18n="envelope.diagram.signature">Assinatura do transcript</span><strong>Hash ML-DSA</strong><i></i></div>
+          </div>
+          <div class="packet-caption"><span>20 bytes</span><span data-i18n="envelope.diagram.versioned">Contêiner binário versionado</span><span>≤ 256 slots</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section keys-section" id="keys">
+      <div class="shell keys-layout">
+        <div class="keys-copy reveal">
+          <span class="section-kicker" data-i18n="keys.kicker">Gerenciamento de chaves</span>
+          <h2 data-i18n="keys.title">Uma chave válida não é automaticamente uma identidade confiável.</h2>
+          <p data-i18n="keys.intro">O ISYCT-Mail separa consistência criptográfica, ciclo de vida e confiança. Um bundle importado entra em quarentena até que uma evidência independente vincule endereço, DID e chaves.</p>
+
+          <div class="trust-states">
+            <div class="trust-state candidate"><span></span><div><strong>CANDIDATE</strong><small data-i18n="keys.states.candidate">Material consistente, ainda bloqueado para envio.</small></div></div>
+            <div class="trust-state verified"><span></span><div><strong>VERIFIED_OOB</strong><small data-i18n="keys.states.oob">Número de segurança confirmado fora do e-mail.</small></div></div>
+            <div class="trust-state high"><span></span><div><strong>VERIFIED_HIGH_ASSURANCE</strong><small data-i18n="keys.states.high">Evidência GOV.BR validada e vinculada.</small></div></div>
+          </div>
+        </div>
+
+        <div class="key-timeline reveal" data-reveal-delay="100">
+          <div class="timeline-line" aria-hidden="true"><span></span></div>
+          <article class="timeline-item">
+            <span class="timeline-index">01</span>
+            <div><small data-i18n="keys.timeline.create.tag">Criar</small><h3 data-i18n="keys.timeline.create.title">Identidade did:isyct</h3><p data-i18n="keys.timeline.create.text">Pares ML-KEM e ML-DSA gerados localmente; o DID deriva das chaves públicas.</p></div>
+          </article>
+          <article class="timeline-item">
+            <span class="timeline-index">02</span>
+            <div><small data-i18n="keys.timeline.exchange.tag">Trocar</small><h3 data-i18n="keys.timeline.exchange.title">Bundle público verificável</h3><p data-i18n="keys.timeline.exchange.text">Documento canônico e fingerprint permitem detectar inconsistências sem expor segredos.</p></div>
+          </article>
+          <article class="timeline-item">
+            <span class="timeline-index">03</span>
+            <div><small data-i18n="keys.timeline.trust.tag">Verificar</small><h3 data-i18n="keys.timeline.trust.title">Protocolo KEY</h3><p data-i18n="keys.timeline.trust.text">Mensagens encadeadas e comparação fora de banda mitigam substituição ativa de chaves.</p></div>
+          </article>
+          <article class="timeline-item">
+            <span class="timeline-index">04</span>
+            <div><small data-i18n="keys.timeline.lifecycle.tag">Evoluir</small><h3 data-i18n="keys.timeline.lifecycle.title">Rotação com histórico</h3><p data-i18n="keys.timeline.lifecycle.text">Novos pares criam outro DID; chaves antigas permanecem apenas para mensagens históricas.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section performance-section" id="performance">
+      <div class="shell">
+        <div class="section-heading heading-row reveal">
+          <div>
+            <span class="section-kicker" data-i18n="performance.kicker">Desempenho medido</span>
+            <h2 data-i18n="performance.title">Criptografia em milissegundos. Rede em segundos.</h2>
+          </div>
+          <p data-i18n="performance.intro">Cada cenário foi executado 100 vezes em modo release, após cinco ciclos de aquecimento. Selecione um ensaio para explorar os resultados.</p>
+        </div>
+
+        <div class="performance-panel reveal">
+          <div class="performance-tabs" role="tablist" aria-label="Ensaios de desempenho" data-i18n-aria-label="performance.tabsLabel">
+            <button type="button" role="tab" aria-selected="true" data-performance-tab="envelope" data-i18n="performance.tabs.envelope">Envelope</button>
+            <button type="button" role="tab" aria-selected="false" data-performance-tab="keys" data-i18n="performance.tabs.keys">Geração de chaves</button>
+            <button type="button" role="tab" aria-selected="false" data-performance-tab="attachments" data-i18n="performance.tabs.attachments">Anexos</button>
+          </div>
+
+          <div class="performance-content">
+            <div class="chart-area">
+              <div class="chart-head">
+                <div><small data-i18n="performance.chart.metric">Métrica principal</small><strong data-chart-title>Mediana de selagem e abertura</strong></div>
+                <span class="sample-badge">n = 100</span>
+              </div>
+              <div class="bar-chart" data-chart aria-live="polite"></div>
+              <div class="chart-legend" data-chart-legend></div>
+            </div>
+            <aside class="performance-highlight">
+              <span class="highlight-label" data-i18n="performance.highlight.label">Leitura principal</span>
+              <strong data-highlight-value>&lt; 8 ms</strong>
+              <p data-highlight-text>Medianas de selagem e abertura para corpos de até 100 KB.</p>
+              <div class="highlight-detail"><span data-i18n="performance.highlight.context">No mesmo ambiente</span><strong data-highlight-secondary>SMTP: 4,036 s</strong></div>
+            </aside>
+          </div>
+        </div>
+
+        <div class="method-note reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm0 8v6m0-10v1"/></svg>
+          <p><strong data-i18n="performance.method.title">Por que 100 repetições?</strong> <span data-i18n="performance.method.text">O planejamento adotou intervalo bilateral de 95%, semiamplitude de até 10% da média e coeficiente de variação conservador de 50%, resultando em mínimo aproximado de 97 observações.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section product-section" id="product">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <span class="section-kicker" data-i18n="product.kicker">Protótipo funcional</span>
+          <h2 data-i18n="product.title">A criptografia faz parte do fluxo, não de uma ferramenta separada.</h2>
+          <p data-i18n="product.intro">Conta, caixa postal, composição, identidades e estabelecimento de confiança convivem na mesma aplicação desktop.</p>
+        </div>
+
+        <div class="product-gallery reveal" data-gallery>
+          <div class="gallery-browser">
+            <div class="browser-bar"><span></span><span></span><span></span><small>ISYCT-Mail</small></div>
+            <button class="gallery-nav gallery-prev" type="button" data-gallery-prev aria-label="Imagem anterior" data-i18n-aria-label="product.previous">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 4-6 6 6 6"/></svg>
+            </button>
+            <img src="assets/screenshot-inbox.png" alt="Caixa de entrada do ISYCT-Mail" data-gallery-image>
+            <button class="gallery-nav gallery-next" type="button" data-gallery-next aria-label="Próxima imagem" data-i18n-aria-label="product.next">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m8 4 6 6-6 6"/></svg>
+            </button>
+          </div>
+          <div class="gallery-meta">
+            <div><span data-gallery-count>01 / 07</span><h3 data-gallery-title>Caixa postal e leitura</h3><p data-gallery-caption>Mensagens tradicionais e protegidas na mesma experiência de uso.</p></div>
+            <div class="gallery-dots" data-gallery-dots aria-label="Selecionar captura" data-i18n-aria-label="product.select"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section boundaries-section" id="boundaries">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <span class="section-kicker" data-i18n="boundaries.kicker">Limites claros</span>
+          <h2 data-i18n="boundaries.title">O que fica protegido — e o que continua visível.</h2>
+        </div>
+        <div class="boundary-grid">
+          <article class="boundary-card protected-boundary reveal">
+            <div class="boundary-icon"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M8 12V8a6 6 0 0 1 12 0v4M5 12h18v13H5z"/></svg></div>
+            <h3 data-i18n="boundaries.protected.title">Dentro do envelope</h3>
+            <ul>
+              <li data-i18n="boundaries.protected.item1">Assunto real e corpos textual/HTML</li>
+              <li data-i18n="boundaries.protected.item2">Nomes, tipos e conteúdo dos anexos</li>
+              <li data-i18n="boundaries.protected.item3">Endereços internos e resposta</li>
+              <li data-i18n="boundaries.protected.item4">Integridade e autenticidade do conteúdo</li>
+            </ul>
+          </article>
+          <article class="boundary-card visible-boundary reveal" data-reveal-delay="100">
+            <div class="boundary-icon"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14s4.5-7 12-7 12 7 12 7-4.5 7-12 7S2 14 2 14Zm12-3a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg></div>
+            <h3 data-i18n="boundaries.visible.title">No transporte</h3>
+            <ul>
+              <li data-i18n="boundaries.visible.item1">Endereços SMTP externos</li>
+              <li data-i18n="boundaries.visible.item2">Data, volume e padrão de comunicação</li>
+              <li data-i18n="boundaries.visible.item3">DIDs, algoritmos e número de slots</li>
+              <li data-i18n="boundaries.visible.item4">Tamanho aproximado da mensagem</li>
+            </ul>
+          </article>
+          <article class="boundary-card device-boundary reveal" data-reveal-delay="200">
+            <div class="boundary-icon"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 24 7v7c0 6-3.8 9.7-10 12-6.2-2.3-10-6-10-12V7l10-4Zm-4 11 3 3 6-7"/></svg></div>
+            <h3 data-i18n="boundaries.device.title">Premissa necessária</h3>
+            <ul>
+              <li data-i18n="boundaries.device.item1">Dispositivo e sistema operacional confiáveis</li>
+              <li data-i18n="boundaries.device.item2">Senha local forte e chaves protegidas</li>
+              <li data-i18n="boundaries.device.item3">Canal independente realmente verificado</li>
+              <li data-i18n="boundaries.device.item4">O protótipo ainda requer auditoria independente</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section download-section" id="download">
+      <div class="shell">
+        <div class="download-card reveal">
+          <div class="download-glow" aria-hidden="true"></div>
+          <div class="download-copy">
+            <span class="section-kicker light" data-i18n="download.kicker">Experimente o protótipo</span>
+            <h2 data-i18n="download.title">Baixe o ISYCT-Mail para Linux.</h2>
+            <p data-i18n="download.intro">Executável experimental de 64 bits para avaliação acadêmica. O arquivo é fornecido sem instalador e pode exigir bibliotecas compatíveis no sistema.</p>
+            <a class="button button-primary button-large download-main" href="isyct_mail" download="isyct_mail" data-download>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v10m0 0 4-4m-4 4L6 8M3 15v2h14v-2"/></svg>
+              <span data-i18n="download.button">Baixar isyct_mail</span>
+              <small>44,2 MiB</small>
+            </a>
+            <a class="button button-ghost button-large manual-download" href="manual_usuario_isyct_mail.pdf" download="manual_usuario_isyct_mail.pdf" data-manual-download>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2.5h8.5L16 6v11.5H4zM12.5 2.5V6H16M7 9h6M7 12h6M7 15h4"/></svg>
+              <span data-i18n="download.manual">Baixar manual do usuário</span>
+              <small data-i18n="download.manualMeta">PDF · Português</small>
+            </a>
+            <p class="download-warning"><span>!</span><span data-i18n="download.warning">Protótipo de pesquisa: não substitui uma solução auditada para uso crítico.</span></p>
+          </div>
+
+          <div class="download-details">
+            <div class="binary-card">
+              <div class="binary-card-head"><div class="linux-mark">Tux</div><div><strong data-i18n="download.binary.title">Binário Linux</strong><small>ELF 64-bit · x86-64</small></div><span class="verified-chip" data-i18n="download.binary.available">Disponível</span></div>
+              <dl>
+                <div><dt data-i18n="download.binary.file">Arquivo</dt><dd>isyct_mail</dd></div>
+                <div><dt data-i18n="download.binary.size">Tamanho</dt><dd>46.302.704 bytes</dd></div>
+                <div><dt data-i18n="download.binary.platform">Plataforma</dt><dd>GNU/Linux x86-64</dd></div>
+              </dl>
+            </div>
+
+            <div class="terminal-card">
+              <div class="terminal-head"><span></span><span></span><span></span><small data-i18n="download.run">Executar no terminal</small></div>
+              <pre><code>chmod +x isyct_mail
+./isyct_mail</code></pre>
+              <button type="button" class="copy-command" data-copy="chmod +x isyct_mail&#10;./isyct_mail">
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6V3h10v11h-3M3 6h11v11H3z"/></svg>
+                <span data-i18n="download.copyCommand">Copiar comandos</span>
+              </button>
+            </div>
+
+            <div class="checksum-card">
+              <div><span data-i18n="download.checksum">SHA-256 do arquivo</span><button type="button" data-copy="4479a4d922302adc7c28fc1694f37f321498bff41c158a502fd657267bf9416c" aria-label="Copiar SHA-256" data-i18n-aria-label="download.copyChecksum"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6V3h10v11h-3M3 6h11v11H3z"/></svg></button></div>
+              <code>4479a4d922302adc7c28fc1694f37f321498bff41c158a502fd657267bf9416c</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq-section" id="faq">
+      <div class="shell faq-layout">
+        <div class="section-heading reveal">
+          <span class="section-kicker" data-i18n="faq.kicker">Perguntas frequentes</span>
+          <h2 data-i18n="faq.title">Antes de testar.</h2>
+        </div>
+        <div class="faq-list reveal">
+          <details>
+            <summary><span data-i18n="faq.item1.question">Preciso trocar de provedor de e-mail?</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 7 6 6 6-6"/></svg></summary>
+            <p data-i18n="faq.item1.answer">Não. A proposta utiliza SMTP, IMAP e MIME convencionais. O protótipo foi avaliado com Gmail, mas a leitura protegida exige outro cliente compatível com o Envelope V4.</p>
+          </details>
+          <details>
+            <summary><span data-i18n="faq.item2.question">Um destinatário sem ISYCT-Mail consegue ler a mensagem?</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 7 6 6 6-6"/></svg></summary>
+            <p data-i18n="faq.item2.answer">Ele recebe e pode armazenar o arquivo .isyct, mas precisa de um cliente que implemente o formato e da chave privada correspondente a um slot autorizado para abrir o conteúdo.</p>
+          </details>
+          <details>
+            <summary><span data-i18n="faq.item3.question">O protótipo oferece anonimato ou sigilo futuro?</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 7 6 6 6-6"/></svg></summary>
+            <p data-i18n="faq.item3.answer">Não. Metadados de transporte continuam visíveis e o formato não oferece sigilo futuro. O objetivo é proteger o conteúdo contra o acesso pelo servidor dentro do modelo de ameaça documentado.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-main">
+      <div>
+        <a class="brand footer-brand" href="#top" aria-label="ISYCT-Mail">
+          <svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true"><path d="M22 3.5 37 9v11.2c0 9.4-5.7 16.5-15 20.3C12.7 36.7 7 29.6 7 20.2V9l15-5.5Z"/><path d="m14 17 8 6 8-6M14 17v11h16V17"/></svg>
+          <span>ISYCT<span class="brand-accent">Mail</span></span>
+        </a>
+        <p data-i18n="footer.description">Cliente de e-mail experimental com criptografia pós-quântica no lado do usuário.</p>
+      </div>
+      <div class="footer-links">
+        <div><strong data-i18n="footer.explore">Explorar</strong><a href="#architecture" data-i18n="nav.architecture">Arquitetura</a><a href="#envelope" data-i18n="nav.envelope">Envelope V4</a><a href="#performance" data-i18n="nav.performance">Desempenho</a></div>
+        <div><strong data-i18n="footer.project">Projeto</strong><a href="#product" data-i18n="footer.prototype">Protótipo</a><a href="#boundaries" data-i18n="footer.security">Segurança e limites</a><a href="manual_usuario_isyct_mail.pdf" download="manual_usuario_isyct_mail.pdf" data-manual-download data-i18n="footer.manual">Manual do usuário</a><a href="#download" data-i18n="nav.download">Baixar para Linux</a></div>
+      </div>
+    </div>
+    <div class="shell footer-bottom"><span>© <span data-year></span> ISYCT-Mail</span><span data-i18n="footer.academic">Projeto acadêmico · Universidade Federal de São Paulo</span></div>
+  </footer>
+
+  <div class="toast" role="status" aria-live="polite" data-toast></div>
+</body>
+</html>
