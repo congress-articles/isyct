@@ -114,7 +114,7 @@
       'performance.tabs.attachments': 'Anexos',
       'performance.chart.metric': 'Métrica principal',
       'performance.highlight.label': 'Leitura principal',
-      'performance.highlight.context': 'No mesmo ambiente',
+      'performance.highlight.context': 'Indicador complementar',
       'performance.method.title': 'Por que 100 repetições?',
       'performance.method.text': 'O planejamento adotou intervalo bilateral de 95%, semiamplitude de até 10% da média e coeficiente de variação conservador de 50%, resultando em mínimo aproximado de 97 observações.',
       'product.kicker': 'Protótipo funcional',
@@ -288,7 +288,7 @@
       'performance.tabs.attachments': 'Attachments',
       'performance.chart.metric': 'Primary metric',
       'performance.highlight.label': 'Key takeaway',
-      'performance.highlight.context': 'In the same environment',
+      'performance.highlight.context': 'Additional metric',
       'performance.method.title': 'Why 100 repetitions?',
       'performance.method.text': 'The design used a two-sided 95% confidence interval, a half-width of up to 10% of the mean, and a conservative 50% coefficient of variation, yielding an approximate minimum of 97 observations.',
       'product.kicker': 'Working prototype',
@@ -357,17 +357,17 @@
       labels: ['1 KB', '10 KB', '100 KB'],
       series: {
         pt: [
-          { name: 'Selagem', values: [4.096, 4.682, 7.312] },
-          { name: 'Abertura', values: [1.357, 1.682, 7.616] }
+          { name: 'Selagem', values: [1.345, 1.626, 3.6955] },
+          { name: 'Abertura', values: [0.501, 0.811, 3.979] }
         ],
         en: [
-          { name: 'Sealing', values: [4.096, 4.682, 7.312] },
-          { name: 'Opening', values: [1.357, 1.682, 7.616] }
+          { name: 'Sealing', values: [1.345, 1.626, 3.6955] },
+          { name: 'Opening', values: [0.501, 0.811, 3.979] }
         ]
       },
       unit: 'ms',
-      pt: { title: 'Mediana de selagem e abertura', highlight: '< 8 ms', text: 'Medianas de selagem e abertura para corpos de até 100 KB.', secondary: 'SMTP: 4,036 s' },
-      en: { title: 'Median sealing and opening time', highlight: '< 8 ms', text: 'Median sealing and opening times for bodies up to 100 KB.', secondary: 'SMTP: 4.036 s' }
+      pt: { title: 'Mediana de selagem e abertura', highlight: '< 4 ms', text: 'Medianas de selagem e abertura para corpos de até 100 KB.', secondary: 'P95 de selagem (100 KB): 5,688 ms' },
+      en: { title: 'Median sealing and opening time', highlight: '< 4 ms', text: 'Median sealing and opening times for bodies up to 100 KB.', secondary: 'Sealing P95 (100 KB): 5.688 ms' }
     },
     keys: {
       labels: ['KEM-512', 'KEM-768', 'KEM-1024', 'DSA-44', 'DSA-65', 'DSA-87'],
@@ -386,20 +386,23 @@
       en: { title: 'Key-pair generation', highlight: '< 2.9 ms', text: 'P95 below 2.9 ms across all six evaluated variants.', secondary: '6 tested variants' }
     },
     attachments: {
-      labels: ['1 MB', '5 MB', '10 MB', '15 MB'],
+      labels: {
+        pt: ['Sem anexo', '1 MB', '5 MB', '10 MB', '15 MB'],
+        en: ['No attachment', '1 MB', '5 MB', '10 MB', '15 MB']
+      },
       series: {
         pt: [
-          { name: 'Selagem', values: [0.405, 2.570, 6.137, 10.020] },
-          { name: 'Abertura', values: [0.056, 0.279, 0.602, 0.854] }
+          { name: 'Selagem', values: [0.001953, 0.4052485, 2.569507, 6.136595, 10.0200115] },
+          { name: 'Abertura', values: [0.0006915, 0.0557975, 0.279190, 0.601701, 0.8538815] }
         ],
         en: [
-          { name: 'Sealing', values: [0.405, 2.570, 6.137, 10.020] },
-          { name: 'Opening', values: [0.056, 0.279, 0.602, 0.854] }
+          { name: 'Sealing', values: [0.001953, 0.4052485, 2.569507, 6.136595, 10.0200115] },
+          { name: 'Opening', values: [0.0006915, 0.0557975, 0.279190, 0.601701, 0.8538815] }
         ]
       },
       unit: 's',
-      pt: { title: 'Mediana por tamanho de anexo', highlight: '10,020 s', text: 'Selagem de um anexo de 15 MB; a abertura permaneceu abaixo de 1 s.', secondary: 'Sobrecarga: 0,063%' },
-      en: { title: 'Median time by attachment size', highlight: '10.020 s', text: 'Sealing a 15 MB attachment; opening remained below 1 second.', secondary: 'Overhead: 0.063%' }
+      pt: { title: 'Mediana por tamanho de anexo', highlight: '10,020 s', text: 'Selagem de um anexo de 15 MB; a abertura permaneceu abaixo de 1 s.', secondary: 'P95 de selagem (15 MB): 11,285 s' },
+      en: { title: 'Median time by attachment size', highlight: '10.020 s', text: 'Sealing a 15 MB attachment; opening remained below 1 second.', secondary: 'Sealing P95 (15 MB): 11.285 s' }
     }
   };
 
@@ -524,11 +527,12 @@
     if (!chart || !legend || !dataset) return;
 
     const series = dataset.series[state.language];
+    const labels = Array.isArray(dataset.labels) ? dataset.labels : dataset.labels[state.language];
     const max = Math.max(...series.flatMap((item) => item.values));
     chart.replaceChildren();
     legend.replaceChildren();
 
-    dataset.labels.forEach((label, index) => {
+    labels.forEach((label, index) => {
       const row = document.createElement('div');
       row.className = 'chart-row';
 

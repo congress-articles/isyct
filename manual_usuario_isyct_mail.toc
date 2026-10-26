@@ -9,26 +9,28 @@
 \contentsline {subsection}{\numberline {3.2}Cadastrar a conta Gmail}{6}{subsection.24}%
 \contentsline {subsection}{\numberline {3.3}Abrir um banco existente}{6}{subsection.30}%
 \contentsline {subsection}{\numberline {3.4}Trocar a senha do banco}{6}{subsection.31}%
-\contentsline {section}{\numberline {4}Demais opções de configuração}{7}{section.32}%
-\contentsline {section}{\numberline {5}Tela principal e sincronização}{9}{section.35}%
-\contentsline {section}{\numberline {6}DIDs e chaves criptográficas}{9}{section.42}%
-\contentsline {subsection}{\numberline {6.1}O que é um DID no ISYCT-Mail}{9}{subsection.43}%
-\contentsline {subsection}{\numberline {6.2}Criar o primeiro DID}{10}{subsection.46}%
-\contentsline {subsection}{\numberline {6.3}Estados e operações}{10}{subsection.52}%
-\contentsline {subsection}{\numberline {6.4}Importação e nível de confiança}{11}{subsection.53}%
-\contentsline {section}{\numberline {7}Troca de chaves com outro usuário}{12}{section.54}%
-\contentsline {subsection}{\numberline {7.1}Iniciar e aceitar a troca}{12}{subsection.57}%
-\contentsline {section}{\numberline {8}Evidência de identidade com assinatura GOV.BR}{13}{section.64}%
-\contentsline {subsection}{\numberline {8.1}Preparar a validação}{13}{subsection.67}%
-\contentsline {subsection}{\numberline {8.2}Assinar a evidência do próprio DID}{13}{subsection.72}%
-\contentsline {subsection}{\numberline {8.3}Validar o PDF recebido de um contato}{14}{subsection.78}%
-\contentsline {section}{\numberline {9}Enviar um e-mail cifrado}{15}{section.79}%
-\contentsline {subsection}{\numberline {9.1}Pré-requisitos}{15}{subsection.80}%
-\contentsline {subsection}{\numberline {9.2}Montar e enviar}{15}{subsection.81}%
-\contentsline {section}{\numberline {10}Receber e abrir um e-mail cifrado}{16}{section.89}%
-\contentsline {section}{\numberline {11}Segurança, backup e recuperação}{16}{section.98}%
-\contentsline {subsection}{\numberline {11.1}Rotina recomendada}{16}{subsection.99}%
-\contentsline {subsection}{\numberline {11.2}O que fazer em caso de perda}{17}{subsection.100}%
-\contentsline {section}{\numberline {12}Solução de problemas}{17}{section.101}%
-\contentsline {section}{\numberline {13}Checklist rápido}{18}{section.103}%
-\contentsline {section}{Referências e endereços úteis}{18}{Item.111}%
+\contentsline {subsection}{\numberline {3.5}Criar outro banco sem o histórico de mensagens}{6}{subsection.32}%
+\contentsline {section}{\numberline {4}Demais opções de configuração}{8}{section.41}%
+\contentsline {section}{\numberline {5}Tela principal e sincronização}{10}{section.44}%
+\contentsline {section}{\numberline {6}DIDs e chaves criptográficas}{10}{section.51}%
+\contentsline {subsection}{\numberline {6.1}O que é um DID no ISYCT-Mail}{10}{subsection.52}%
+\contentsline {subsection}{\numberline {6.2}Criar o primeiro DID}{11}{subsection.55}%
+\contentsline {subsection}{\numberline {6.3}Alterar o rótulo de um DID}{11}{subsection.61}%
+\contentsline {subsection}{\numberline {6.4}Estados e operações}{12}{subsection.66}%
+\contentsline {subsection}{\numberline {6.5}Importação e nível de confiança}{12}{subsection.67}%
+\contentsline {section}{\numberline {7}Troca de chaves com outro usuário}{13}{section.68}%
+\contentsline {subsection}{\numberline {7.1}Iniciar e aceitar a troca}{13}{subsection.71}%
+\contentsline {section}{\numberline {8}Evidência de identidade com assinatura GOV.BR}{14}{section.78}%
+\contentsline {subsection}{\numberline {8.1}Preparar a validação}{14}{subsection.81}%
+\contentsline {subsection}{\numberline {8.2}Assinar a evidência do próprio DID}{14}{subsection.86}%
+\contentsline {subsection}{\numberline {8.3}Validar o PDF recebido de um contato}{15}{subsection.92}%
+\contentsline {section}{\numberline {9}Enviar um e-mail cifrado}{16}{section.93}%
+\contentsline {subsection}{\numberline {9.1}Pré-requisitos}{16}{subsection.94}%
+\contentsline {subsection}{\numberline {9.2}Montar e enviar}{16}{subsection.95}%
+\contentsline {section}{\numberline {10}Receber e abrir um e-mail cifrado}{17}{section.103}%
+\contentsline {section}{\numberline {11}Segurança, backup e recuperação}{17}{section.112}%
+\contentsline {subsection}{\numberline {11.1}Rotina recomendada}{17}{subsection.113}%
+\contentsline {subsection}{\numberline {11.2}O que fazer em caso de perda}{18}{subsection.114}%
+\contentsline {section}{\numberline {12}Solução de problemas}{18}{section.115}%
+\contentsline {section}{\numberline {13}Checklist rápido}{19}{section.117}%
+\contentsline {section}{Referências e endereços úteis}{19}{Item.125}%

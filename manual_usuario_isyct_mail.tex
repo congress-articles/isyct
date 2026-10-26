@@ -120,7 +120,7 @@
     boxrule=0.8pt,arc=3mm,left=7mm,right=7mm,top=6mm,bottom=6mm
   ]
     \color{white}
-    Este manual apresenta o primeiro acesso com Gmail, a criação do banco local cifrado, o gerenciamento de DIDs, a troca de chaves, o uso de evidências GOV.BR e o fluxo de envio e recebimento do Envelope V4.
+    Este manual apresenta o primeiro acesso com Gmail, a criação e a renovação do banco local cifrado, o gerenciamento de DIDs e seus rótulos, a troca de chaves, o uso de evidências GOV.BR e o fluxo de envio e recebimento do Envelope V4.
   \end{tcolorbox}
 
   \vfill
@@ -249,6 +249,27 @@ Com o banco aberto, informe a senha atual e a nova senha na área \menu{Troca de
   Feche o banco e mantenha uma cópia do arquivo em mídia protegida. Teste periodicamente se a cópia pode ser aberta com a senha guardada. O arquivo e a senha não devem ficar juntos no mesmo local desprotegido.
 \end{tipbox}
 
+\subsection{Criar outro banco sem o histórico de mensagens}
+
+A função \menu{Novo banco sem histórico} realiza uma exportação seletiva para outro arquivo SQLCipher. Ela é indicada, por exemplo, para iniciar um novo período de uso com um banco menor sem recriar identidades e configurações. O novo banco preserva a conta e sua configuração, preferências, DIDs próprios e de terceiros, chaves privadas, vínculos, evidências OOB/GOV.BR e registros de confiança. Mensagens, anexos, tarefas pendentes e filas operacionais antigas não são copiados.
+
+\begin{enumerate}
+  \item Abra o banco de origem e confirme que a conta consegue acessar o servidor IMAP.
+  \item Em \menu{Configurações}, localize \menu{Novo banco sem histórico} e informe um nome para o novo arquivo.
+  \item Crie uma nova senha para o banco, repita-a no campo de confirmação e registre-a em um gerenciador de senhas.
+  \item Selecione \uis{Revisar conteúdo}. Confira a conta, a quantidade de DIDs, os registros de confiança e as evidências que serão preservados, além da quantidade de mensagens que permanecerá somente no banco atual.
+  \item Marque a confirmação de criação sem mensagens, anexos, tarefas pendentes ou filas antigas.
+  \item Se desejar trabalhar imediatamente no arquivo novo, marque \uis{Abrir o novo banco assim que a criação terminar}.
+  \item Selecione \uis{Criar novo DB}, escolha a pasta de destino e aguarde a verificação de integridade. O aplicativo não substitui um arquivo de destino já existente.
+  \item Ao terminar, confira a mensagem que informa o caminho salvo, os DIDs preservados, os cortes IMAP registrados e a cópia de zero mensagens.
+\end{enumerate}
+
+Antes da criação, o aplicativo registra um corte para cada pasta existente no servidor. Esse corte impede que uma sincronização posterior baixe novamente as mensagens anteriores à exportação. Se o servidor mudar o identificador interno de uma pasta, a sincronização é interrompida em vez de importar silenciosamente o histórico; nesse caso, preserve os dois bancos e investigue o aviso antes de prosseguir.
+
+\begin{importantbox}[O banco antigo continua sendo o arquivo histórico]
+  O novo arquivo não é uma cópia de segurança completa: ele começa sem mensagens e anexos. Preserve o banco anterior, sua respectiva senha e uma cópia protegida enquanto precisar consultar ou decifrar o histórico. Se a opção de abertura automática não for marcada, o banco atual permanece aberto após a criação.
+\end{importantbox}
+
 \section{Demais opções de configuração}
 
 \screen{assets/manual/manual-settings-security.png}{0.54\textheight}{Continuação da tela de configurações: desempenho, Envelope V4 e abertura de arquivos.}
@@ -298,6 +319,19 @@ O DID identifica um conjunto de chaves públicas usado pelo protocolo. As chaves
   \item Marque a opção para torná-lo padrão, caso seja a identidade principal da conta.
   \item Selecione \uis{Criar DID} e aguarde a confirmação.
 \end{enumerate}
+
+\subsection{Alterar o rótulo de um DID}
+
+O rótulo é um nome local usado para reconhecer com facilidade um DID próprio ou de terceiros. Ele pode ser corrigido ou atualizado sem gerar novas chaves.
+
+\begin{enumerate}
+  \item Abra \menu{DIDs}, permaneça em \menu{Gerenciar DIDs} e localize a identidade desejada.
+  \item Selecione \uis{Editar rótulo} no cartão do DID.
+  \item Informe um nome claro, com até 120 caracteres, como \textit{Contato profissional 2027} ou \textit{Notebook principal}.
+  \item Selecione \uis{Salvar rótulo}. Para abandonar a edição sem mudanças, use \uis{Cancelar} ou pressione a tecla Escape.
+\end{enumerate}
+
+A alteração modifica somente o texto exibido no catálogo local. O DID, as chaves, as impressões digitais, o ciclo de vida, os vínculos, as evidências e o estado de confiança permanecem inalterados. Rótulos são apenas uma ajuda de organização: em uma verificação de segurança, confira também o DID completo e sua impressão digital.
 
 \subsection{Estados e operações}
 
@@ -438,6 +472,7 @@ Se houver muitos envelopes pendentes, a tela de configurações oferece abertura
   \item use senha forte e exclusiva no banco local;
   \item faça cópias periódicas do banco somente quando ele estiver fechado;
   \item guarde a senha e a cópia do banco em locais separados e protegidos;
+  \item ao iniciar um banco sem histórico, preserve o banco anterior e anote claramente o período coberto por cada arquivo;
   \item revogue a senha de app na Conta Google se o computador for perdido;
   \item marque um DID como comprometido quando houver suspeita de exposição e realize nova troca de chaves;
   \item compare os códigos de segurança por canal independente;
@@ -473,6 +508,7 @@ Se houver muitos envelopes pendentes, a tela de configurações oferece abertura
   \endhead
   Gmail não autentica & Senha comum usada no lugar da senha de app; espaços copiados; senha revogada; política da conta. & Confira o e-mail completo, gere uma senha de app, remova os espaços entre grupos e verifique a autenticação em duas etapas. \\
   Banco não abre & Caminho errado, senha incorreta ou arquivo danificado. & Selecione o arquivo correto, respeite maiúsculas/minúsculas da senha e teste uma cópia conhecida. Não tente recriar por cima do arquivo. \\
+  Novo banco sem histórico não é criado & Falha de autenticação ou rede durante o corte IMAP; senhas novas divergentes; arquivo de destino já existente. & Teste a sincronização da conta, confira as duas senhas, escolha outro nome de arquivo e repita primeiro a revisão do conteúdo. \\
   Contato não aparece no envio cifrado & DID remoto ainda candidato, troca incompleta, chave revogada ou e-mail divergente. & Conclua a troca de chaves, sincronize as contas e revise o estado de confiança e o endereço associado. \\
   Código de segurança diverge & Sessão errada, contato incorreto ou tentativa de interferência. & Não confirme. Cancele, valide o endereço por canal independente e inicie nova sessão. \\
   Envelope não abre & DID local ausente, chave antiga removida, arquivo incompleto ou envelope para outro destinatário. & Preserve o e-mail original, confirme o destinatário, restaure o banco correto e verifique o painel de erro. \\
